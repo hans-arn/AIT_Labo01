@@ -26,7 +26,7 @@
 ## Task 2: Perform backups using tar and zip
 
 ```sh
- tar -cvpzf backup.tar.gz --exclude=/backup.tar.gz --exclude=/home/jerome/Téléchargements /home/jerome
+ tar -cvpzf backup.tar.gz --exclude=/backup.tar.gz  /home/jerome
 ```
 
 > Note: we used gz cuse its the most used
@@ -42,3 +42,18 @@ cd tmp; tar -zxvf ../backup.tar.gz
 ```
 
 > restore of archive 
+
+```
+gunzip backup.tar.gz; find /home/jerome/HEIG/A1 -mtime +1454 -exec tar -uvf backup.tar  {} \; ; gzip  backup.tar
+```
+
+> en exécutant la commande à la date du 17 septembre
+
+## Task 3: Backup of file metadata
+
+![](/home/jerome/HEIG/Labo/AIT/Labo01/img/beforetar.png)
+
+![](/home/jerome/HEIG/Labo/AIT/Labo01/img/aftertar.png)
+
+## Task 4: Symbolic and hard links
+
