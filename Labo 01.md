@@ -8,7 +8,7 @@ We do not have any disks mounted as `hd*` or `sd*`. This is simply because, we h
 
 ![](./img/withUsb.png)
 
-As we can see with `mount`, only the `nvme0n1p7`, `nvme0n1p1` & `nvme0n1p4`.
+As we can see with `mount`, only the `nvme0n1p7`, `nvme0n1p1` & `nvme0n1p4` are mounted.
 
 > Note: `/` isn't mounted as a `nvme*` disk because it's encrypted with `luks` so it's visible as a `luks` disk.
 
@@ -16,7 +16,7 @@ As we can see with `mount`, only the `nvme0n1p7`, `nvme0n1p1` & `nvme0n1p4`.
 
 2. Attach the disk to your computer
 
-When plugging the a new disk to our computer, we can see that there is a `/dev/sd*` disk mounted which only has 1 partition.
+When plugging a new disk to our computer, we can see that there is a `/dev/sd*` disk mounted which only has 1 partition.
 
 ![](img/withUsb.png)
 
@@ -57,25 +57,23 @@ We checking the amount of free space on these file systems, we can see that they
  tar -cvpzf backup.tar.gz --exclude=/backup.tar.gz  /home/jerome
 ```
 
-> Note: we used gz cuse its the most used
+> Note: We've decided to use the `gz` compression since it's among the most used when using `tar`.
 
 ```sh
-  tar -tvf backup.tar.gz
+# Listing the contents of the archive
+tar -tvf backup.tar.gz
 ```
-
-> Pour lister
 
 ```sh
-cd tmp; tar -zxvf ../backup.tar.gz 
+# restoring the archive
+cd tmp; tar -zxvf ../backup.tar.gz
 ```
 
-> restore of archive 
-
+```bash
+touch --date '2016-09-23 10:42:33' some_file
+find /home/jerome/HEIG/A1 -newer some_file > /tmp/files_to_backup.txt
+tar -T /tmp/files_to_backup.txt backup.tar.gz
 ```
-gunzip backup.tar.gz; find /home/jerome/HEIG/A1 -mtime +1454 -exec tar -uvf backup.tar  {} \; ; gzip  backup.tar
-```
-
-> en exécutant la commande à la date du 17 septembre
 
 ## Task 3: Backup of file metadata
 
