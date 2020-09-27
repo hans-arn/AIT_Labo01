@@ -77,11 +77,71 @@ tar -T /tmp/files_to_backup.txt backup.tar.gz
 
 ## Task 3: Backup of file metadata
 
-![](./img/beforetar.png)
+We'll be testing `zip` and `tar` with the following directory:
 
-![](./img/aftertar.png)
+![](img/tar_n_zip_workdir.png)
+
+### Last modification time
+
+#### tar
+
+We've used the following command to backup our working directory:
+
+```bash
+tar -czf backup.tar.gz to_backup
+```
+
+Then when restoring it, we can see that the `last modification time` of it's content doesn't change.
+
+![](img/tar_lastmodif.png)
+
+
 
 > By default the **Tar** command overwrite metadata when extracting. With the option **--no-overwrite-dir** we can only preserve the last modification time. 
+
+#### zip
+
+We've used the following command to backup our working directory:
+
+```bash
+zip -r backup.zip to_backup
+```
+
+Then when restoring it, we can see that the `last modification time` of it's content doesn't change.
+
+![](img/zip_lastmodif.png)
+
+### Permissions
+
+#### tar
+
+If use the same command for restoration previously used, we can see that the file permissions are restored correctly but on the other hand, the directory permissions aren't.
+
+![](img/tar_permissions.png)
+
+> Note: In the above screenshot, we can clearly see that the permissions of the `assets` folder aren't the same as our original working directory
+
+Te restore the original permissions, we simply need to add the `p` flag when restoring.
+
+![](img/tar_permissions_saved.png)
+
+#### zip
+
+By default when restoring a zip archive, the permissions are kept.
+
+### Ownership
+
+#### tar
+
+If we look at our previous screenshots, we can see that the ownership of the files is given to the user restoring the backup. To preserve the original owners, we need to add the `--same-owner` when restoring the backup.
+
+![](img/tar_ownership.png)
+
+#### zip
+
+The behaviour is the same as for `tar` (i.e. the ownership of the files is given to the user restoring the backup).
+
+It doesn't seem to be possible to restore the correct ownership when working with `zip`.
 
 ## Task 4: Symbolic and hard links
 
