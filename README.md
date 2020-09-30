@@ -145,8 +145,40 @@ It doesn't seem to be possible to restore the correct ownership when working wit
 
 ## Task 4: Symbolic and hard links
 
-```sh
-tar -h --hard-dereference -cvpzf backup.tar.gz test
+### Symbolic links
+
+#### tar
+
+By default, `tar` keeps the `symlinks` but, when restoring a backup with,  we need to specify the **-l** argument which will preserve them.
+
+e.g.
+
+```bash
+tar -cvpzfl backup.tar.gz
 ```
 
-> the **-h** archive and dump the files they point to for symlink and the **--hard-dereference** archive and dump the files they point to for hardlink 
+#### zip
+
+When creating the backup with `zip`, we need to add the **-y** argument to store the `symlinks`.
+
+e.g.
+
+```bash
+zip --symlinks -r backup.zip to_bacup/
+```
+
+### Hard links
+
+#### tar
+
+By default, `tar` keeps the `symlinks` but, when restoring a backup with,  we need to specify the **-h** argument which will preserve them.
+
+e.g.
+
+```bash
+tar -cvpzfh backup.tar.gz
+```
+
+#### zip
+
+`zip` doesn't support hardlinks.
